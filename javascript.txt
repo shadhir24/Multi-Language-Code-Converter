@@ -1,0 +1,96 @@
+class Node {
+    constructor(x) {
+        this.data = x;
+        this.next = null;
+    }
+}
+
+function printList(curr) {
+    while (curr) {
+        console.log(curr.data + " ");
+        curr = curr.next;
+    }
+    console.log();
+}
+
+
+function getTail(cur) {
+    while (cur && cur.next) {
+        cur = cur.next;
+    }
+    return cur;
+}
+
+
+function partition(head, tail) {
+
+    
+    let pivot = head;
+
+
+    let pre = head;
+    let curr = head;
+
+    
+    while (curr !== tail.next) {
+    
+        
+        if (curr.data < pivot.data) {
+            
+            
+            [curr.data, pre.next.data] = [pre.next.data, curr.data];
+            
+            
+            pre = pre.next;
+        }
+        
+        
+        curr = curr.next;
+    }
+
+    
+    [pivot.data, pre.data] = [pre.data, pivot.data];
+    
+    
+    return pre;
+}
+
+
+function quickSortHelper(head, tail) {
+
+    
+    
+    if (!head || head === tail) {
+        return;
+    }
+
+    
+    let pivot = partition(head, tail);
+
+   
+    quickSortHelper(head, pivot);
+
+   
+    quickSortHelper(pivot.next, tail);
+}
+
+
+function quickSort(head) {
+
+    
+    let tail = getTail(head);
+    
+    
+    quickSortHelper(head, tail);
+    return head;
+}
+
+
+let head = new Node(30);
+head.next = new Node(3);
+head.next.next = new Node(4);
+head.next.next.next = new Node(20);
+head.next.next.next.next = new Node(5);
+
+head = quickSort(head);
+printList(head);
